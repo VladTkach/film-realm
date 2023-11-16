@@ -15,6 +15,8 @@ public class Startup
     {
         services.AddFilmRealmContext(_configuration);
         
+        services.AddRepositories();
+        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
