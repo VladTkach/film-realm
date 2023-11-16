@@ -1,4 +1,6 @@
-﻿namespace FilmRealm.WebApi;
+﻿using FilmRealm.WebApi.Extensions;
+
+namespace FilmRealm.WebApi;
 
 public class Startup
 {
@@ -11,6 +13,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddFilmRealmContext(_configuration);
+        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
@@ -35,6 +39,8 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
+        
+        app.UseFilmRealmContext();
 
         app.UseEndpoints(cfg => { cfg.MapControllers(); });
     }
