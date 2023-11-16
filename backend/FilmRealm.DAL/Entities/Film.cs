@@ -10,12 +10,7 @@ public class Film : BaseEntity
     public Guid PosterId { get; set; }
     public Guid ResourceId { get; set; }
     
-    public List<GenresRelation> GenresRelations { get; } = new();
     public List<Genre> Genres { get; } = new();
-    
-    public List<ActorsRelation> ActorsRelations { get; } = new();
     public List<Actor> Actors { get; } = new();
-    
-    public List<UserList> UserLists { get; set; } = new();
     public List<User> Users { get; set; } = new();
 }

@@ -11,7 +11,6 @@ public class User : BaseEntity
     public Guid AvatarId { get; set; }
     public int UserRoleId { get; set; }
     public UserRole UserRole { get; set; } = null!;
-
-    public List<UserList> UserLists { get; set; } = new();
+    
     public List<Film> Films { get; set; } = new();
 }
