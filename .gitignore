@@ -390,9 +390,14 @@ FodyWeavers.xsd
 # Windows Installer files from build outputs
 *.cab
 *.msi
+!backend/Squirrel.Core/Squirrel.Core.WebAPI/Resources/*.msi
 *.msix
 *.msm
 *.msp
 
 # JetBrains Rider
 *.sln.iml
+backend/.idea/
+
+# .exe files of ConsoleApp
+ExecutableFiles/
