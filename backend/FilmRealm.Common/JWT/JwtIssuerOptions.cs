@@ -48,5 +48,7 @@ public sealed class JwtIssuerOptions
         /// The signing key to use when generating tokens.
         /// </summary>
         public SigningCredentials SigningCredentials { get; set; } = null!;
+
+        public string SecretJwtKey { get; set; } = null!;
         
     }

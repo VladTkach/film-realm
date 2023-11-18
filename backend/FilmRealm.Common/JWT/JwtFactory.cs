@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
+using FilmRealm.Common.DTOs.Auth;
 using FilmRealm.Common.Interfaces;
 using FilmRealm.Common.Security;
 using FilmRealm.Shared.Exceptions;

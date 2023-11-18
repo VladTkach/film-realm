@@ -7,7 +7,7 @@ namespace FilmRealm.DAL.Repositories.Abstract;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly FilmRealmContext _context;
+    protected readonly FilmRealmContext _context;
 
     protected BaseRepository(FilmRealmContext context)
     {

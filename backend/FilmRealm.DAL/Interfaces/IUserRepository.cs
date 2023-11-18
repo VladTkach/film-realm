@@ -1,5 +1,8 @@
-﻿namespace FilmRealm.DAL.Interfaces;
+﻿using FilmRealm.DAL.Entities;
 
-public interface IUserRepository
+namespace FilmRealm.DAL.Interfaces;
+
+public interface IUserRepository : IBaseRepository<User>
 {
+    Task<User?> GetUserByEmailAsync(string email);
 }

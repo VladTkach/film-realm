@@ -1,4 +1,4 @@
-﻿namespace FilmRealm.Common.JWT;
+﻿namespace FilmRealm.Common.DTOs.Auth;
 
 public class AccessToken
 {

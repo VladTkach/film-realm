@@ -1,4 +1,5 @@
-﻿using FilmRealm.Common.JWT;
+﻿using FilmRealm.Common.DTOs.Auth;
+using FilmRealm.Common.JWT;
 
 namespace FilmRealm.Common.Interfaces;
 
