@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmRealm.WebApi", "FilmRea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmRealm.DAL", "FilmRealm.DAL\FilmRealm.DAL.csproj", "{FF0A9759-0162-4527-B6E2-D89F9940C0EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmRealm.BLL", "FilmRealm.BLL\FilmRealm.BLL.csproj", "{9B977B5B-8E3D-4CD2-BAFB-52CE32E44FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmRealm.Common", "FilmRealm.Common\FilmRealm.Common.csproj", "{F1ECC859-E62E-4533-B875-06939DD2EA0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmRealm.Shared", "FilmRealm.Shared\FilmRealm.Shared.csproj", "{78F7604C-BFEF-4D68-B0CF-3AEE495C6FBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{FF0A9759-0162-4527-B6E2-D89F9940C0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0A9759-0162-4527-B6E2-D89F9940C0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF0A9759-0162-4527-B6E2-D89F9940C0EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B977B5B-8E3D-4CD2-BAFB-52CE32E44FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B977B5B-8E3D-4CD2-BAFB-52CE32E44FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B977B5B-8E3D-4CD2-BAFB-52CE32E44FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B977B5B-8E3D-4CD2-BAFB-52CE32E44FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1ECC859-E62E-4533-B875-06939DD2EA0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1ECC859-E62E-4533-B875-06939DD2EA0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1ECC859-E62E-4533-B875-06939DD2EA0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1ECC859-E62E-4533-B875-06939DD2EA0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F7604C-BFEF-4D68-B0CF-3AEE495C6FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F7604C-BFEF-4D68-B0CF-3AEE495C6FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F7604C-BFEF-4D68-B0CF-3AEE495C6FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F7604C-BFEF-4D68-B0CF-3AEE495C6FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

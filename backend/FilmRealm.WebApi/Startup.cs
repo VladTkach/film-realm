@@ -1,4 +1,5 @@
-﻿using FilmRealm.WebApi.Extensions;
+﻿using FilmRealm.BLL.Extensions;
+using FilmRealm.WebApi.Extensions;
 
 namespace FilmRealm.WebApi;
 
@@ -14,6 +15,13 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddFilmRealmContext(_configuration);
+        
+        services.AddCustomServices();
+        services.AddRepositories();
+        
+        services.RegisterAutoMapper();
+        
+        services.ConfigureJwt(_configuration);
         
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
