@@ -25,7 +25,7 @@ public class AuthService(IMapper mapper, IJwtFactory jwtFactory, IUserService us
         return new AuthUserDto
         {
             User = _mapper.Map<UserDto>(user),
-            Token = await GenerateNewAccessTokenAsync(user.Id, user.UserName, user.Email)
+            Token = await GenerateNewAccessTokenAsync(user.Id, user.UserName, user.Email, user.UserRole.Name)
         };
     }
 
@@ -36,11 +36,13 @@ public class AuthService(IMapper mapper, IJwtFactory jwtFactory, IUserService us
         return new AuthUserDto
         {
             User = _mapper.Map<UserDto>(createdUser),
-            Token = await GenerateNewAccessTokenAsync(createdUser.Id, createdUser.UserName, createdUser.Email)
+            Token = await GenerateNewAccessTokenAsync(createdUser.Id, createdUser.UserName, createdUser.Email,
+                createdUser.UserRole.Name)
         };
     }
 
-    private async Task<RefreshedAccessTokenDto> GenerateNewAccessTokenAsync(int userId, string userName, string email)
+    private async Task<RefreshedAccessTokenDto> GenerateNewAccessTokenAsync(int userId, string userName, string email,
+        string role)
     {
         var refreshToken = jwtFactory.GenerateRefreshToken();
 
@@ -51,7 +53,7 @@ public class AuthService(IMapper mapper, IJwtFactory jwtFactory, IUserService us
         // });
         // await _context.SaveChangesAsync();
 
-        var accessToken = await jwtFactory.GenerateAccessToken(userId, userName, email);
+        var accessToken = await jwtFactory.GenerateAccessToken(userId, userName, email, role);
 
         return new RefreshedAccessTokenDto(accessToken, refreshToken);
     }

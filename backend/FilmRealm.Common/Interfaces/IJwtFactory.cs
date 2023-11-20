@@ -5,7 +5,7 @@ namespace FilmRealm.Common.Interfaces;
 
 public interface IJwtFactory
 {
-    Task<AccessToken> GenerateAccessToken(int id, string userName, string email);
+    Task<AccessToken> GenerateAccessToken(int id, string userName, string email, string role);
     string GenerateRefreshToken();
     int GetUserIdFromToken(string accessToken, string signingKey);
 }

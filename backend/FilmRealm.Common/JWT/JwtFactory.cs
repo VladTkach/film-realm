@@ -13,6 +13,7 @@ namespace FilmRealm.Common.JWT;
 
 public class JwtFactory : IJwtFactory
 {
+    public const string IdClaimName = "id";
     private readonly JwtIssuerOptions _jwtOptions;
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
 
@@ -24,7 +25,7 @@ public class JwtFactory : IJwtFactory
         _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
     }
 
-    public async Task<AccessToken> GenerateAccessToken(int id, string userName, string email)
+    public async Task<AccessToken> GenerateAccessToken(int id, string userName, string email, string role)
     {
         var identity = GenerateClaimsIdentity(id, userName);
 
@@ -35,7 +36,8 @@ public class JwtFactory : IJwtFactory
             new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
             new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                 ClaimValueTypes.Integer64),
-            identity.FindFirst("id")
+            identity.FindFirst("id"),
+            new Claim(ClaimTypes.Role, role)
         };
 
         // Create the JWT security token and encode it.
@@ -72,7 +74,7 @@ public class JwtFactory : IJwtFactory
         // invalid token/signing key was passed and we can't extract user claims
         if (claimsPrincipal == null)
         {
-            throw new InvalidTokenException("access");
+            throw new InvalidTokenException();
         }
 
         return int.Parse(claimsPrincipal.Claims.First(c => c.Type == "id").Value);

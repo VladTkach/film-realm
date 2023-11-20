@@ -5,7 +5,7 @@ namespace FilmRealm.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class SampleController: ControllerBase
 {
     [HttpGet]

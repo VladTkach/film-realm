@@ -1,0 +1,17 @@
+<app-base-modal (close)="closeModal()">
+  <div class="container text-white modal-content p-2">
+    <h2 class="text-3xl mb-3 text-center">Log in</h2>
+    <!-- Форма логіну -->
+      <div class="mb-2">
+        <label class="block mb-1">Email</label>
+        <app-input class="input email" [formControl]="$any(loginForm.controls['email'])" [label]="'email'" placeholder="Enter your Email"></app-input>
+      </div>
+
+      <div class="mb-2">
+        <label class="block mb-2">Password</label>
+        <app-input [formControl]="$any(loginForm.controls['password'])" [label]="'password'" [type]="'password'" placeholder="Enter your Password"></app-input>
+      </div>
+
+      <button class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-md w-full" (click)="login()">Log in</button>
+  </div>
+</app-base-modal>
