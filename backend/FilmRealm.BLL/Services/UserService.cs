@@ -29,6 +29,7 @@ public class UserService(IMapper mapper, IUserRepository userRepository) : BaseS
         user.PasswordSalt = salt;
         user.PasswordHash = SecurityHelper.HashPassword(createUserDto.Password, salt);
         user.UserRoleId = 1;
+        user.UserRole.Name = "User";
         await userRepository.AddAsync(user);
 
         return user;

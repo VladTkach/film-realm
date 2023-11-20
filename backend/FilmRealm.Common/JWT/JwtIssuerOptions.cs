@@ -51,4 +51,5 @@ public sealed class JwtIssuerOptions
 
         public string SecretJwtKey { get; set; } = null!;
         
+        public IList<string> Roles { get; set; } = new List<string>();
     }
