@@ -35,6 +35,10 @@ export class AuthService {
     this.currentUserSource.next(userAuthDto.user);
   }
 
+  public updateCurrentUser(userDto: UserDto){
+    this.currentUserSource.next(userDto);
+  }
+
   getDecodedToken(token: string){
     return JSON.parse(atob(token.split('.')[1]))
   }

@@ -8,4 +8,6 @@ public interface IUserService
     Task<User?> GetUserByEmailAsync(string email);
 
     Task<User> CreateUserAsync(CreateUserDto createUserDto);
+    Task<UserDto> UpdateUserNameAsync(UpdateUserNameDto updateUserNameDto);
+    Task<UserDto> UpdateUserPassword(UpdateUserPassword updateUserPassword);
 }

@@ -1,7 +1,6 @@
 <app-base-modal (close)="closeModal()">
   <div class="container text-white modal-content p-2">
     <h2 class="text-3xl mb-3 text-center">Log in</h2>
-    <!-- Форма логіну -->
       <div class="mb-2">
         <label class="block mb-1">Email</label>
         <app-input class="input email" [formControl]="$any(loginForm.controls['email'])" [label]="'email'" placeholder="Enter your Email"></app-input>
