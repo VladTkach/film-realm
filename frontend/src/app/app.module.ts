@@ -6,7 +6,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from "./shared/shared.module";
 import {RouterOutlet} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {CoreModule} from "./core/core.module";
+import {JwtInterceptor} from "./core/intercptors/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -19,9 +21,12 @@ import {HttpClientModule} from "@angular/common/http";
     RouterOutlet,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

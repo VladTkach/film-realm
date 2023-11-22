@@ -18,4 +18,15 @@ export class UserService {
   public updatePassword(updatePasswordDto: UpdatePasswordDto){
     return this.http.putRequest<UserDto>(`${this.authRoutePrefix}/update-password`, updatePasswordDto);
   }
+
+  public addAvatar(avatar: File) {
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+
+    return this.http.postRequest(`${this.authRoutePrefix}/add-avatar`, formData);
+  }
+
+  public deleteAvatar() {
+    return this.http.deleteRequest(`${this.authRoutePrefix}/delete-avatar`);
+  }
 }

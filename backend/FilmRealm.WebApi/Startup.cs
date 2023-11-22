@@ -1,5 +1,6 @@
 ﻿using FilmRealm.BLL.Extensions;
 using FilmRealm.WebApi.Extensions;
+using FilmRealm.WebApi.Middlewares;
 
 namespace FilmRealm.WebApi;
 
@@ -20,6 +21,9 @@ public class Startup
         services.AddRepositories();
         
         services.RegisterAutoMapper();
+
+        services.ConfigureAzureBlobStorage(_configuration);
+        services.AddAzureBlobStorage(_configuration);
         
         services.ConfigureJwt(_configuration);
         
@@ -36,20 +40,26 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        
-        app.UseCors(builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
 
+        app.UseCors(opt => opt
+            .AllowAnyHeader()
+            .WithExposedHeaders("Content-Disposition")
+            .AllowAnyMethod()
+            .AllowAnyOrigin()
+            .WithExposedHeaders("Token-Expired"));
+        
+        app.UseContainers();
         app.UseRouting();
-        app.UseHttpsRedirection();
 
         app.UseAuthentication();
         app.UseAuthorization();
         
+        app.UseMiddleware<CurrentUserMiddleware>();
+        
         app.UseFilmRealmContext();
-
+        
         app.UseEndpoints(cfg => { cfg.MapControllers(); });
+        
+        app.UseHttpsRedirection();
     }
 }

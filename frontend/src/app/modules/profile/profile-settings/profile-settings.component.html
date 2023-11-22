@@ -26,9 +26,9 @@
   <!-- Фото та кнопка зміни фото -->
   <div class="flex items-start">
     <div class="relative">
-      <app-avatar [name]="currentUser?.userName" [photoUrl]="''" [size]="250"></app-avatar>
-      <button class="absolute bottom-0 right-0 ml-4 bg-blue-600 text-white px-4 py-2 rounded-md">Edit</button>
+      <app-avatar [name]="currentUser?.userName" [photoUrl]="currentUser?.avatarUrl" [size]="250"></app-avatar>
+      <label for="userAvatar" class="absolute bottom-0 right-0 ml-4 cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md">Edit</label>
+      <input type="file" id="userAvatar" accept="image/png, image/jpeg" (change)="onFileChange($event)" class="hidden"/>
     </div>
-
   </div>
 </div>

@@ -16,6 +16,9 @@ export class ProfileSettingsComponent implements OnInit {
   public passwordForm: FormGroup = new FormGroup({});
   public currentUser?: UserDto;
 
+  private readonly maxFileLength = 5 * 1024 * 1024;
+  private readonly allowedTypes = ['image/png', 'image/jpeg'];
+
   constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService) {
   }
 
@@ -24,8 +27,8 @@ export class ProfileSettingsComponent implements OnInit {
     this.initializeForm();
   }
 
-  public updateUserName(){
-    if (!this.currentUser){
+  public updateUserName() {
+    if (!this.currentUser) {
       return;
     }
     const updateUserNameDto: UpdateUsernameDto = {
@@ -41,8 +44,8 @@ export class ProfileSettingsComponent implements OnInit {
       })
   }
 
-  public updatePassword(){
-    if (!this.currentUser){
+  public updatePassword() {
+    if (!this.currentUser) {
       return;
     }
     const updatePasswordDto: UpdatePasswordDto = {
@@ -57,6 +60,42 @@ export class ProfileSettingsComponent implements OnInit {
           this.authService.updateCurrentUser(userDto);
         }
       })
+  }
+
+  public onFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+
+    if (!inputElement?.files?.length) {
+      return;
+    }
+    const file = inputElement.files[0];
+
+    if (!this.fileValidate(file)) {
+      return;
+    }
+
+    this.userService.addAvatar(file)
+      .subscribe({
+        next: () => {
+          if (this.currentUser){
+            this.currentUser.avatarUrl = this.currentUser.avatarUrl + '?' + Date.now();
+          }
+        }
+      })
+  }
+
+  public fileValidate(file: File) {
+    if (file.size > this.maxFileLength) {
+      // this.notificationService.error(`The file size should not exceed ${this.maxFileLength / (1024 * 1024)}MB`);
+      return false;
+    }
+
+    if (!this.allowedTypes.includes(file.type)) {
+      // this.notificationService.error(`Invalid file type, need ${this.allowedTypes.join(', ')}`);
+      return false;
+    }
+
+    return true;
   }
 
   private initializeForm() {
@@ -77,10 +116,13 @@ export class ProfileSettingsComponent implements OnInit {
   private getCurrentUser() {
     this.authService.currentUser$.subscribe({
       next: user => {
-        if (user){
+        if (user) {
           this.currentUser = user;
+          this.currentUser.avatarUrl = this.currentUser.avatarUrl + '?' + Date.now();
         }
       }
     })
   }
+
+
 }

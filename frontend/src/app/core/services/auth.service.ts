@@ -39,6 +39,17 @@ export class AuthService {
     this.currentUserSource.next(userDto);
   }
 
+  public getAccessToken(){
+    const userString = localStorage.getItem('user');
+    if (!userString) {
+      return null;
+    }
+    const user: UserAuthDto = JSON.parse(userString);
+
+    console.log(user.token.accessToken.token);
+    return user.token.accessToken.token;
+  }
+
   getDecodedToken(token: string){
     return JSON.parse(atob(token.split('.')[1]))
   }

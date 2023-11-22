@@ -9,9 +9,12 @@
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="12.0.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="6.0.0-preview.4.21253.5" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.0.2" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FilmRealm.BlobStorage\FilmRealm.BlobStorage.csproj" />
       <ProjectReference Include="..\FilmRealm.Common\FilmRealm.Common.csproj" />
       <ProjectReference Include="..\FilmRealm.DAL\FilmRealm.DAL.csproj" />
     </ItemGroup>
