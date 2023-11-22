@@ -123,7 +123,7 @@ namespace FilmRealm.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("AvatarId")
+                    b.Property<Guid?>("AvatarId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")

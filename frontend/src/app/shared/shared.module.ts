@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { InputComponent } from './components/input/input.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 
 
@@ -14,11 +15,14 @@ import {RouterLink} from "@angular/router";
         HeaderComponent,
         BaseModalComponent,
         LoginComponent,
-        InputComponent
+        InputComponent,
+        AvatarComponent
     ],
-    exports: [
-        HeaderComponent
-    ],
+  exports: [
+    HeaderComponent,
+    InputComponent,
+    AvatarComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

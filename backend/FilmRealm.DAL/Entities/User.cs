@@ -8,7 +8,7 @@ public class User : BaseEntity
     public string Email { get; set; } = string.Empty;
     public string? PasswordHash { get; set; }
     public string? PasswordSalt { get; set; }
-    public Guid AvatarId { get; set; }
+    public Guid? AvatarId { get; set; }
     public int UserRoleId { get; set; }
     public UserRole UserRole { get; set; } = null!;
     

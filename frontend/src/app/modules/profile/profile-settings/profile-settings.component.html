@@ -1,0 +1,38 @@
+<div class="flex justify-around p-10">
+  <div class="flex-col w-1/4">
+    <div class="flex-1 mb-4">
+      <app-input [formControl]="$any(userNameForm.controls['userName'])" [label]="'Username'" [type]="'text'"
+                 placeholder="Enter your Username"></app-input>
+    </div>
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md" (click)="updateUserName()">Change username</button>
+
+    <div class="flex-1 mb-4">
+      <app-input [formControl]="$any(passwordForm.controls['currentPassword'])" [label]="'password'"
+                 [type]="'password'" placeholder="Enter your Password"></app-input>
+    </div>
+
+    <div class="flex-1 mb-4">
+      <app-input [formControl]="$any(passwordForm.controls['newPassword'])" [label]="'New Password'"
+                 [type]="'password'"
+                 placeholder="Enter New Password"></app-input>
+    </div>
+
+    <div class="flex-1 mb-4">
+      <app-input [formControl]="$any(passwordForm.controls['confirmNewPassword'])" [label]="'Confirm New Password'"
+                 [type]="'password'" placeholder="Confirm New Password"></app-input>
+    </div>
+    <button class=" bg-blue-600 text-white px-4 py-2 rounded-md" (click)="updatePassword()">Change Password</button>
+  </div>
+  <div class="flex items-start">
+    <div class="relative">
+      <app-avatar [name]="currentUser?.userName" [photoUrl]="currentUser?.avatarUrl" [size]="250"></app-avatar>
+      <div class="absolute bottom-0 -right-5">
+        <label for="userAvatar" class="ml-4 cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md">Edit</label>
+        <input type="file" id="userAvatar" accept="image/png, image/jpeg" (change)="onFileChange($event)"
+               class="hidden"/>
+        <label *ngIf="currentUser?.avatarUrl" (click)="deletePhoto()"
+               class="ml-2 cursor-pointer bg-red-500 text-white px-4 py-2 rounded-md">Delete</label>
+      </div>
+    </div>
+  </div>
+</div>

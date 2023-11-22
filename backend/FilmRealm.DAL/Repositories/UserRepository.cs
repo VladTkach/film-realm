@@ -18,4 +18,11 @@ public class UserRepository: BaseRepository<User>, IUserRepository
             .Include(u => u.UserRole)
             .FirstOrDefaultAsync(u => u.Email == email);
     }
+
+    public Task<User?> GetUserByNameAsync(string userName)
+    {
+        return _context.Set<User>()
+            .Include(u => u.UserRole)
+            .FirstOrDefaultAsync(u => u.UserName == userName);
+    }
 }

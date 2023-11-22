@@ -1,6 +1,7 @@
 ﻿using FilmRealm.DAL.Context;
 using FilmRealm.DAL.Entities.Abstract;
 using FilmRealm.DAL.Interfaces;
+using FilmRealm.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmRealm.DAL.Repositories.Abstract;
@@ -19,10 +20,17 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         return await _context.Set<TEntity>().ToListAsync();
     }
 
-    public async Task<TEntity?> GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync(int id)
     {
-        return await _context.Set<TEntity>()
+        var entity = await _context.Set<TEntity>()
             .FirstOrDefaultAsync(e => e.Id == id);
+
+        if (entity is null)
+        {
+            throw new NotFoundException(nameof(entity));
+        }
+
+        return entity;
     }
 
     public async Task AddAsync(TEntity entity)
@@ -39,14 +47,10 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public async Task DeleteByIdAsync(int id)
     {
-        var entity = await _context.Set<TEntity>()
-            .FirstOrDefaultAsync(e => e.Id == id);
-        
-        if (entity != null)
-        {
-            _context.Set<TEntity>().Remove(entity);
-            await _context.SaveChangesAsync();
-        }
+        var entity = await GetByIdAsync(id);
+
+        _context.Set<TEntity>().Remove(entity);
+        await _context.SaveChangesAsync();
     }
 
     public void Update(TEntity entity)

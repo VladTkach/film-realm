@@ -5,8 +5,9 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from "./shared/shared.module";
 import {RouterOutlet} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     RouterOutlet,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

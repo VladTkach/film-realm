@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FilmRealm.BLL.MappingProfiles.MappingActions;
 using FilmRealm.Common.DTOs.User;
 using FilmRealm.DAL.Entities;
 
@@ -8,7 +9,7 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<UserDto, User>().ReverseMap();
+        CreateMap<User, UserDto>().AfterMap<BuildAvatarLinkAction>().ReverseMap();
         CreateMap<CreateUserDto, User>().ReverseMap();
     }
 }

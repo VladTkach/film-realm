@@ -6,7 +6,7 @@ public interface IBaseRepository<TEntity> where TEntity : BaseEntity
 {
     Task<IEnumerable<TEntity>> GetAllAsync();
 
-    Task<TEntity?> GetByIdAsync(int id);
+    Task<TEntity> GetByIdAsync(int id);
 
     Task AddAsync(TEntity entity);
 

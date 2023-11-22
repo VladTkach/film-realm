@@ -1,7 +1,12 @@
 ﻿using System.Security.Claims;
 using System.Text;
+using Azure.Core.Extensions;
+using Azure.Storage.Blobs;
 using FilmRealm.BLL.Interfaces;
 using FilmRealm.BLL.Services;
+using FilmRealm.BlobStorage.Interfaces;
+using FilmRealm.BlobStorage.Models;
+using FilmRealm.BlobStorage.Services;
 using FilmRealm.Common.Interfaces;
 using FilmRealm.Common.JWT;
 using FilmRealm.DAL.Context;
@@ -9,6 +14,7 @@ using FilmRealm.DAL.Interfaces;
 using FilmRealm.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FilmRealm.WebApi.Extensions;
@@ -22,6 +28,12 @@ public static class ServiceExtensions
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+
+        services.AddScoped<IImageService, ImageService>();
+        
+        services.AddScoped<UserIdStorageService>();
+        services.AddTransient<IUserIdSetter>(s => s.GetRequiredService<UserIdStorageService>());
+        services.AddTransient<IUserIdGetter>(s => s.GetRequiredService<UserIdStorageService>());
     }
 
     public static void AddRepositories(this IServiceCollection services)
@@ -95,5 +107,28 @@ public static class ServiceExtensions
                 }
             };
         });
+    }
+    
+    public static void AddAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
+    {            
+        services.AddAzureClients(clientBuilder =>
+        {
+            clientBuilder.AddBlobServiceClient(configuration.GetConnectionString("BlobStorageConnectionString")!, preferMsi: true);
+        });
+        services.AddTransient<IBlobService, BlobService>();
+    }
+
+    private static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+    {
+        if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri? serviceUri))
+        {
+            return builder.AddBlobServiceClient(serviceUri)!;
+        }
+        return builder.AddBlobServiceClient(serviceUriOrConnectionString)!;
+    }
+    
+    public static void ConfigureAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<BlobStorageOptions>(configuration.GetSection(nameof(BlobStorageOptions)));
     }
 }
