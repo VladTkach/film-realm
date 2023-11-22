@@ -8,8 +8,14 @@ namespace FilmRealm.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class UserController(IUserService userService, IImageService imageService) : ControllerBase
+public class UserController(IUserService userService, IImageService imageService, IUserIdGetter userIdGetter) : ControllerBase
 {
+    [HttpGet("from-token")]
+    public async Task<ActionResult<UserDto>> GetUserFromTokenAsync()
+    {
+        return Ok(await userService.GetUserById(userIdGetter.GetCurrentUserId()));
+    }
+    
     [HttpPut("update-username")]
     public async Task<ActionResult<UserDto>> UpdateUserNameAsync(UpdateUserNameDto updateUserNameDto)
     {

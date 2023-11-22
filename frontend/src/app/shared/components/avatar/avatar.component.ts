@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
@@ -16,25 +16,12 @@ export class AvatarComponent implements OnChanges{
   public color = ['#EB7181', '#468547', '#FFD558' ,'#3670B2'];
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    if (changes['photoUrl']) {
-      console.log(this.photoUrl)
-      if (!this.photoUrl){
-        console.log('show initials')
-        this.showInitials = true;
-        this.createInitials();
-
-        const randomIndex = Math.floor(Math.random()) * Math.floor(this.color.length);
-        this.circleColor = this.color[randomIndex];
-      }
-      else {
-        this.showInitials = false;
-      }
+    if (changes['photoUrl'] || changes['name']) {
+      this.generatePhoto();
     }
   }
 
   public getFontSize(): number {
-    // Розмір шрифту буде 40% від переданого розміру, наприклад
     return Number(this.size) * 0.4;
   }
 
@@ -42,8 +29,7 @@ export class AvatarComponent implements OnChanges{
     if (!this.name){
       return;
     }
-    const words = this.name.split(' ').filter(word => word); // Розділити рядок на слова і видалити порожні
-    console.log(words);
+    const words = this.name.split(' ').filter(word => word);
     let initials = '';
     const maxInitials = 2;
 
@@ -54,7 +40,19 @@ export class AvatarComponent implements OnChanges{
           break;
       }
     }
-    console.log(initials);
     this.initials = initials;
+  }
+
+  private generatePhoto(){
+    if (!this.photoUrl){
+      this.showInitials = true;
+      this.createInitials();
+
+      const randomIndex = Math.floor(Math.random()) * Math.floor(this.color.length);
+      this.circleColor = this.color[randomIndex];
+    }
+    else {
+      this.showInitials = false;
+    }
   }
 }

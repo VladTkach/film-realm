@@ -11,6 +11,10 @@ export class UserService {
   private readonly authRoutePrefix = '/api/user';
   constructor(private http: HttpInternalService) { }
 
+  public getUserFromToken() {
+    return this.http.getRequest<UserDto>(`${this.authRoutePrefix}/from-token`);
+  }
+
   public updateUserName(updateUserNameDto: UpdateUsernameDto){
     return this.http.putRequest<UserDto>(`${this.authRoutePrefix}/update-username`, updateUserNameDto);
   }

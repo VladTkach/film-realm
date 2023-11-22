@@ -4,6 +4,8 @@ import {BehaviorSubject, tap} from "rxjs";
 import {UserDto} from "../../models/user/user-dto";
 import {UserLoginDto} from "../../models/user/user-login-dto";
 import {UserAuthDto} from "../../models/user/user-auth-dto";
+import {AccessToken} from "../../models/auth/access-token";
+import {Token} from "../../models/auth/token";
 
 @Injectable({
   providedIn: 'root'
@@ -17,40 +19,31 @@ export class AuthService {
   public login(userLoginDto: UserLoginDto){
     return this.http.postRequest<UserAuthDto>(`${this.authRoutePrefix}/login`, userLoginDto)
       .pipe(tap( (userAuth) => {
-        this.setCurrentUser(userAuth);
+        this.setCurrentUser(userAuth.user);
+        this.setToken(userAuth.token);
       }))
   }
 
   public logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.currentUserSource.next(null);
   }
 
-  public setCurrentUser(userAuthDto: UserAuthDto) {
-    const roles = this.getDecodedToken(userAuthDto.token.accessToken.token).role;
-    Array.isArray(roles);
-    console.log(roles);
-
-    localStorage.setItem('user', JSON.stringify(userAuthDto));
-    this.currentUserSource.next(userAuthDto.user);
-  }
-
-  public updateCurrentUser(userDto: UserDto){
+  public setCurrentUser(userDto: UserDto) {
     this.currentUserSource.next(userDto);
   }
 
   public getAccessToken(){
-    const userString = localStorage.getItem('user');
-    if (!userString) {
+    const tokenString = localStorage.getItem('token');
+    if (!tokenString) {
       return null;
     }
-    const user: UserAuthDto = JSON.parse(userString);
+    const token: Token = JSON.parse(tokenString);
 
-    console.log(user.token.accessToken.token);
-    return user.token.accessToken.token;
+    return token.accessToken.token;
   }
 
-  getDecodedToken(token: string){
-    return JSON.parse(atob(token.split('.')[1]))
+  private setToken(token: Token) {
+    localStorage.setItem('token', JSON.stringify(token));
   }
 }

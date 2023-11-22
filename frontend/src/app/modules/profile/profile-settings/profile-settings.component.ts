@@ -5,7 +5,6 @@ import {UserDto} from "../../../models/user/user-dto";
 import {UserService} from "../../../core/services/user.service";
 import {UpdateUsernameDto} from "../../../models/user/update-username-dto";
 import {UpdatePasswordDto} from "../../../models/user/update-password-dto";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-profile-settings',
@@ -40,7 +39,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.userService.updateUserName(updateUserNameDto)
       .subscribe({
         next: userDto => {
-          this.authService.updateCurrentUser(userDto);
+          this.authService.setCurrentUser(userDto);
         }
       })
   }
@@ -58,7 +57,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.userService.updatePassword(updatePasswordDto)
       .subscribe({
         next: userDto => {
-          this.authService.updateCurrentUser(userDto);
+          this.authService.setCurrentUser(userDto);
         }
       })
   }
@@ -80,7 +79,7 @@ export class ProfileSettingsComponent implements OnInit {
         next: (userDto) => {
           if (this.currentUser){
             this.currentUser.avatarUrl = userDto.avatarUrl + '?' + Date.now();
-            this.authService.updateCurrentUser(userDto);
+            this.authService.setCurrentUser(userDto);
           }
         }
       })
