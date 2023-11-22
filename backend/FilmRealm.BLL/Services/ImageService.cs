@@ -1,6 +1,8 @@
-﻿using FilmRealm.BLL.Interfaces;
+﻿using AutoMapper;
+using FilmRealm.BLL.Interfaces;
 using FilmRealm.BlobStorage.Interfaces;
 using FilmRealm.BlobStorage.Models;
+using FilmRealm.Common.DTOs.User;
 using FilmRealm.DAL.Context;
 using FilmRealm.DAL.Entities;
 using FilmRealm.DAL.Interfaces;
@@ -19,18 +21,20 @@ public class ImageService : IImageService
     private readonly IBlobService _blobStorageService;
     private readonly IUserIdGetter _userIdGetter;
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
     private readonly BlobStorageOptions _blobStorageOptions;
 
     public ImageService(IBlobService blobStorageService, IUserIdGetter userIdGetter,
-        IOptions<BlobStorageOptions> blobStorageOptions, IUserRepository userRepository)
+        IOptions<BlobStorageOptions> blobStorageOptions, IUserRepository userRepository, IMapper mapper)
     {
         _blobStorageService = blobStorageService;
         _userIdGetter = userIdGetter;
         _userRepository = userRepository;
+        _mapper = mapper;
         _blobStorageOptions = blobStorageOptions.Value;
     }
     
-    public async Task AddAvatarAsync(IFormFile avatar)
+    public async Task<UserDto> AddAvatarAsync(IFormFile avatar)
     {
         ValidateImage(avatar);
 
@@ -51,6 +55,8 @@ public class ImageService : IImageService
 
         userEntity.AvatarId = guid;
         _userRepository.Update(userEntity);
+        
+        return _mapper.Map<UserDto>(userEntity);
     }
 
     public async Task DeleteAvatarAsync()

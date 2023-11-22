@@ -5,6 +5,7 @@ import {UserDto} from "../../../models/user/user-dto";
 import {UserService} from "../../../core/services/user.service";
 import {UpdateUsernameDto} from "../../../models/user/update-username-dto";
 import {UpdatePasswordDto} from "../../../models/user/update-password-dto";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-profile-settings',
@@ -76,15 +77,27 @@ export class ProfileSettingsComponent implements OnInit {
 
     this.userService.addAvatar(file)
       .subscribe({
-        next: () => {
+        next: (userDto) => {
           if (this.currentUser){
-            this.currentUser.avatarUrl = this.currentUser.avatarUrl + '?' + Date.now();
+            this.currentUser.avatarUrl = userDto.avatarUrl + '?' + Date.now();
+            this.authService.updateCurrentUser(userDto);
           }
         }
       })
   }
 
-  public fileValidate(file: File) {
+  public deletePhoto() {
+    console.log('invoke');
+    this.userService.deleteAvatar()
+      .subscribe({
+        next: () => {
+          if (this.currentUser){
+            this.currentUser.avatarUrl = undefined;
+          }
+        }
+      })
+  }
+  private fileValidate(file: File) {
     if (file.size > this.maxFileLength) {
       // this.notificationService.error(`The file size should not exceed ${this.maxFileLength / (1024 * 1024)}MB`);
       return false;
@@ -118,11 +131,9 @@ export class ProfileSettingsComponent implements OnInit {
       next: user => {
         if (user) {
           this.currentUser = user;
-          this.currentUser.avatarUrl = this.currentUser.avatarUrl + '?' + Date.now();
+          this.currentUser.avatarUrl = this.currentUser.avatarUrl ?  this.currentUser.avatarUrl + '?' + Date.now() : undefined;
         }
       }
     })
   }
-
-
 }

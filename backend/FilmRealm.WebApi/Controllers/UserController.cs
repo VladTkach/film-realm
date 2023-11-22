@@ -23,10 +23,9 @@ public class UserController(IUserService userService, IImageService imageService
     }
     
     [HttpPost("add-avatar")]
-    public async Task<ActionResult> AddUserAvatarAsync(IFormFile avatar)
+    public async Task<ActionResult<UserDto>> AddUserAvatarAsync(IFormFile avatar)
     {
-        await imageService.AddAvatarAsync(avatar);
-        return NoContent();
+        return Ok(await imageService.AddAvatarAsync(avatar));
     }
     
     [HttpDelete("delete-avatar")]
