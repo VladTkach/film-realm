@@ -4,7 +4,6 @@ import {BehaviorSubject, tap} from "rxjs";
 import {UserDto} from "../../models/user/user-dto";
 import {UserLoginDto} from "../../models/user/user-login-dto";
 import {UserAuthDto} from "../../models/user/user-auth-dto";
-import {AccessToken} from "../../models/auth/access-token";
 import {Token} from "../../models/auth/token";
 
 @Injectable({

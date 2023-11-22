@@ -16,6 +16,11 @@ public class UserService(IMapper mapper, IUserRepository userRepository) : BaseS
         return await userRepository.GetUserByEmailAsync(email);
     }
 
+    public async Task<UserDto> GetUserById(int id)
+    {
+        return _mapper.Map<UserDto>(await userRepository.GetByIdAsync(id));
+    }
+
     public async Task<User> CreateUserAsync(CreateUserDto createUserDto)
     {
         if (await GetUserByEmailAsync(createUserDto.Email) is not null)

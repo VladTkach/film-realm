@@ -6,6 +6,7 @@ namespace FilmRealm.BLL.Interfaces;
 public interface IUserService
 {
     Task<User?> GetUserByEmailAsync(string email);
+    Task<UserDto> GetUserById(int id);
 
     Task<User> CreateUserAsync(CreateUserDto createUserDto);
     Task<UserDto> UpdateUserNameAsync(UpdateUserNameDto updateUserNameDto);
