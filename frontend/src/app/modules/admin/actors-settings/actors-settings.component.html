@@ -1,0 +1,33 @@
+<div class="p-5 w-full" >
+  <div class="flex gap-3">
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openActorModal(true)">
+      Add actor
+    </button>
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openActorModal(false)"
+            [disabled]="selectedActor === undefined">
+      Update
+    </button>
+    <button class="mb-8 bg-red-600 text-white px-4 py-2 rounded-md"
+            (click)="deleteActor()"
+            [disabled]="selectedActor === undefined">
+      Delete
+    </button>
+  </div>
+
+  <div class="flex flex-wrap">
+    <app-actor-card *ngFor="let actor of actors"
+                    [actor]="actor"
+                    [selected]="isSelected(actor)"
+                    (selectActor)="toggleSelection(actor)">
+    </app-actor-card>
+  </div>
+</div>
+
+<app-actor-modal *ngIf="isActorModalOpen"
+                 (close)="closeActorModal()"
+                 (actor)="actorReceive($event)"
+                 [isCreateMode]="isCreateMode"
+                 [updatedActor]="selectedActor">
+</app-actor-modal>

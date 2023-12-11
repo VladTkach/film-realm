@@ -4,6 +4,7 @@ using Azure.Core.Extensions;
 using Azure.Storage.Blobs;
 using FilmRealm.BLL.Interfaces;
 using FilmRealm.BLL.Services;
+using FilmRealm.BLL.Sieve;
 using FilmRealm.BlobStorage.Interfaces;
 using FilmRealm.BlobStorage.Models;
 using FilmRealm.BlobStorage.Services;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using Microsoft.IdentityModel.Tokens;
+using Sieve.Services;
 
 namespace FilmRealm.WebApi.Extensions;
 
@@ -28,17 +30,28 @@ public static class ServiceExtensions
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IGenreService, GenreService>();
+        services.AddScoped<IActorService, ActorService>();
+        services.AddScoped<IFilmService, FilmService>();
+        services.AddScoped<ICommentService, CommentService>();
 
         services.AddScoped<IImageService, ImageService>();
         
         services.AddScoped<UserIdStorageService>();
         services.AddTransient<IUserIdSetter>(s => s.GetRequiredService<UserIdStorageService>());
         services.AddTransient<IUserIdGetter>(s => s.GetRequiredService<UserIdStorageService>());
+
+        services.AddScoped<ISieveProcessor, CustomSieveProcessor>();
+        services.AddScoped<ISieveCustomFilterMethods, SieveCustomFilterMethods>();
     }
 
     public static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
+        services.AddScoped<IActorRepository, ActorRepository>();
+        services.AddScoped<IFilmRepository, FilmRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
     }
 
     public static void AddFilmRealmContext(this IServiceCollection services, IConfiguration configuration)
@@ -52,7 +65,7 @@ public static class ServiceExtensions
     public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions))!;
-        // Get secret key from appsettings for testing.
+        // Get secret key from appSettings for testing.
         var secretKey = jwtAppSettingOptions[nameof(JwtIssuerOptions.SecretJwtKey)];
         var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey!));
 

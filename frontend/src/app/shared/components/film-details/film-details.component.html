@@ -1,0 +1,17 @@
+<div class="mr-2 bg-gray-300 rounded-md cursor-pointer relative film overflow-hidden"
+     *ngIf="film"
+     (click)="selectFilmHandler()">
+  <app-poster [photoUrl]="film.posterUrl" [width]="200" [height]="300"></app-poster>
+  <div class="bg-black opacity-40 absolute w-full h-full top-0 rounded-md"></div>
+  <div class="absolute w-full h-full top-0 flex flex-col justify-end p-2">
+    <div class="description text-white">
+      <h3 class="font-extrabold text-xl">{{film.name}}</h3>
+      <p class="description h-16">{{film.description}}</p>
+    </div>
+  </div>
+  <div class="absolute w-full h-full rotate-90 top-0 flex justify-center items-center play">
+    <svg width="50" height="50" viewBox="-50 -50 300 300">
+      <polygon class="triangle" stroke-linejoin="round" points="100,0 0,200 200,200"/>
+    </svg>
+  </div>
+</div>

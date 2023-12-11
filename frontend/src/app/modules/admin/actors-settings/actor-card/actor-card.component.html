@@ -1,0 +1,8 @@
+<div [ngClass]="{'bg-gray-400': selected}"
+     class="px-6 py-3 mr-2 bg-gray-300 rounded-md cursor-pointer"
+     *ngIf="actor"
+     (click)="selectActorHandler()">
+  <h3>{{actor.name}}</h3>
+</div>
+
+

@@ -13,4 +13,6 @@ public class Film : BaseEntity
     public List<Genre> Genres { get; } = new();
     public List<Actor> Actors { get; } = new();
     public List<User> Users { get; set; } = new();
+
+    public List<Comment> Comments { get; set; } = new();
 }

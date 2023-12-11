@@ -1,0 +1,33 @@
+<div class="p-5 w-full" >
+  <div class="flex gap-3">
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openGenreModal(true)">
+            Add genre
+    </button>
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openGenreModal(false)"
+            [disabled]="selectedGenre === undefined">
+            Update
+    </button>
+    <button class="mb-8 bg-red-600 text-white px-4 py-2 rounded-md"
+            (click)="deleteGenre()"
+            [disabled]="selectedGenre === undefined">
+            Delete
+    </button>
+  </div>
+
+  <div class="flex flex-wrap">
+    <app-genre-card *ngFor="let genre of genres"
+                    [genre]="genre"
+                    [selected]="isSelected(genre)"
+                    (selectGenre)="toggleSelection(genre)">
+    </app-genre-card>
+  </div>
+</div>
+
+<app-genre-modal *ngIf="isGenreModalOpen"
+                 (close)="closeGenreModal()"
+                 (genre)="genreReceive($event)"
+                 [isCreateMode]="isCreateMode"
+                 [updatedGenre]="selectedGenre">
+</app-genre-modal>

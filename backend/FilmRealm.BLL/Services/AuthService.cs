@@ -12,7 +12,7 @@ namespace FilmRealm.BLL.Services;
 public class AuthService(IMapper mapper, IJwtFactory jwtFactory, IUserService userService) : BaseService(mapper),
     IAuthService
 {
-    public async Task<AuthUserDto> AuthenticateUser(UserLoginDto userLoginDto)
+    public async Task<AuthUserDto> AuthenticateUserAsync(UserLoginDto userLoginDto)
     {
         var user = await userService.GetUserByEmailAsync(userLoginDto.Email);
 

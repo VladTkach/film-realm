@@ -1,11 +1,10 @@
-<div class="container">
+<div class="container" [ngStyle]="{'width': width}">
   <div class="relative">
     <input
       [formControl]="control"
       type="{{ type === 'text' ? 'text' : show ? 'text' : 'password' }}"
       placeholder="{{ placeholder }}"
-      class="w-full h-10 px-4 py-2 rounded-md mr-4 bg-gray-700 text-white focus:outline-none {{ type === 'password' ? 'pr-12' : 'pr-4' }}"
-    />
+      class="w-full h-10 px-4 py-2 rounded-md mr-4 bg-gray-700 text-white focus:outline-none {{ type === 'password' ? 'pr-12' : 'pr-4' }}" (input)="onInputChange($event)"/>
     <span *ngIf="type === 'password'" class="absolute inset-y-0 right-0 flex items-center pr-3">
       <button type="button" class="focus:outline-none" (click)="show = !show">
         <svg *ngIf="show" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

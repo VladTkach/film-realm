@@ -8,6 +8,8 @@ import {RouterOutlet} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {CoreModule} from "./core/core.module";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -15,13 +17,15 @@ import {CoreModule} from "./core/core.module";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,
     RouterOutlet,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

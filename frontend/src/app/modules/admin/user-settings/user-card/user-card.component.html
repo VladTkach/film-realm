@@ -1,0 +1,9 @@
+<div [ngClass]="{'bg-gray-400': selected}"
+     class="px-6 py-3 mr-2 bg-gray-300 rounded-md cursor-pointer flex items-center gap-2"
+     *ngIf="user"
+     (click)="selectUserHandler()">
+  <app-avatar [size]="50" [photoUrl]="user.avatarUrl" [name]="user.userName"></app-avatar>
+  <h3>{{user.userName}}</h3>
+</div>
+
+

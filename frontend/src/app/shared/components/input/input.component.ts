@@ -1,4 +1,4 @@
-import {Component, Input, Self} from '@angular/core';
+import {Component, EventEmitter, Input, Output, Self} from '@angular/core';
 import {ControlValueAccessor, FormControl, NgControl} from "@angular/forms";
 
 @Component({
@@ -19,6 +19,8 @@ export class InputComponent implements ControlValueAccessor {
 
   @Input() height = '45px';
 
+  @Output() input: EventEmitter<string> = new EventEmitter<string>();
+
   public show = false;
 
   constructor(@Self() public ngControl: NgControl) {
@@ -33,5 +35,10 @@ export class InputComponent implements ControlValueAccessor {
 
   public get control(): FormControl {
     return this.ngControl.control as FormControl;
+  }
+
+  public onInputChange(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.input.emit(inputValue);
   }
 }

@@ -1,0 +1,30 @@
+<div *ngIf="totalItems > pageSize" class="text-white">
+  <div class="flex justify-center rounded-sm py-2">
+      <button class="px-3 py-1 bg-blue-500 rounded-md mx-1"
+         (click)="goToPage(1)"
+         [disabled]="currentPage === 1">
+        First
+      </button>
+      <button class="px-3 py-1 bg-blue-600 rounded-md mx-1"
+         (click)="goToPage(currentPage - 1)"
+         [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <button *ngFor="let page of visiblePages" class="px-3 py-1 rounded-md mx-1"
+         [class.bg-blue-500]="currentPage === page"
+         [class.text-gray-300]="currentPage !== page"
+         (click)="goToPage(page)">
+        {{ page }}
+      </button>
+      <button class="px-3 py-1 bg-blue-600 rounded-md mx-1"
+         (click)="goToPage(currentPage + 1)"
+         [disabled]="currentPage === totalPages">
+        Next
+      </button>
+      <button class="px-3 py-1 bg-blue-500 rounded-md mx-1"
+         (click)="goToPage(totalPages)"
+         [disabled]="currentPage === totalPages">
+        Last
+      </button>
+    </div>
+</div>

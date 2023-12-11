@@ -18,6 +18,14 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('src/app/modules/profile/profile.module').then((m) => m.ProfileModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('src/app/modules/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'films/:id',
+    loadChildren: () => import('src/app/modules/film-page/film-page.module').then((m) => m.FilmPageModule),
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 @NgModule({

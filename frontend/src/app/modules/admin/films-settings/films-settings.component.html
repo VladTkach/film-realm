@@ -1,0 +1,30 @@
+<div class="p-5 w-full" >
+  <div class="flex gap-3">
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openFilmModal(true)">
+      Add film
+    </button>
+    <button class="mb-8 bg-blue-600 text-white px-4 py-2 rounded-md"
+            (click)="openFilmModal(false)"
+            [disabled]="selectedFilm === undefined">
+      Update
+    </button>
+    <button class="mb-8 bg-red-600 text-white px-4 py-2 rounded-md"
+            (click)="deleteFilm()"
+            [disabled]="selectedFilm === undefined">
+      Delete
+    </button>
+  </div>
+
+  <div class="flex flex-wrap">
+    <app-film-card *ngFor="let film of films"
+                    [film]="film"
+                    [selected]="isSelected(film)"
+                    (selectFilm)="toggleSelection(film)">
+    </app-film-card>
+  </div>
+</div>
+
+<app-film-modal *ngIf="isFilmModalOpen"
+                 (close)="closeFilmModal()" (film)="filmReceive($event)">
+</app-film-modal>

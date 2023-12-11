@@ -4,6 +4,6 @@ namespace FilmRealm.BLL.Interfaces;
 
 public interface IAuthService
 {
-    Task<AuthUserDto> AuthenticateUser(UserLoginDto userLoginDto);
+    Task<AuthUserDto> AuthenticateUserAsync(UserLoginDto userLoginDto);
     public Task<AuthUserDto> RegisterAsync(CreateUserDto createUserDto);
 }

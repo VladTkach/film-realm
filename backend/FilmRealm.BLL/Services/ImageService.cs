@@ -3,7 +3,6 @@ using FilmRealm.BLL.Interfaces;
 using FilmRealm.BlobStorage.Interfaces;
 using FilmRealm.BlobStorage.Models;
 using FilmRealm.Common.DTOs.User;
-using FilmRealm.DAL.Context;
 using FilmRealm.DAL.Entities;
 using FilmRealm.DAL.Interfaces;
 using FilmRealm.Shared.Exceptions;
@@ -59,6 +58,26 @@ public class ImageService : IImageService
         return _mapper.Map<UserDto>(userEntity);
     }
 
+    public async Task<Guid> AddPosterAsync(IFormFile poster, Guid? currentImageId)
+    {
+        ValidateImage(poster);
+        
+        var content = await CropAvatar(poster);
+        var guid = currentImageId ?? Guid.NewGuid();
+        var blob = new BlobDto
+        {
+            Name = guid.ToString(),
+            ContentType = poster.ContentType,
+            Content = content
+        };
+
+        await (currentImageId is null
+            ? _blobStorageService.UploadAsync(_blobStorageOptions.PostersContainer, blob)
+            : _blobStorageService.UpdateAsync(_blobStorageOptions.PostersContainer, blob));
+        
+        return guid;
+    }
+
     public async Task DeleteAvatarAsync()
     {
         var userEntity = await _userRepository.GetByIdAsync(_userIdGetter.GetCurrentUserId());
@@ -73,7 +92,13 @@ public class ImageService : IImageService
         userEntity.AvatarId = null;
         _userRepository.Update(userEntity);
     }
-    
+
+    public async Task DeletePosterAsync(Guid posterId)
+    {
+        await _blobStorageService
+            .DeleteAsync(_blobStorageOptions.PostersContainer, posterId.ToString());
+    }
+
     private async Task<byte[]> CropAvatar(IFormFile avatar)
     {
         await using var imageStream = avatar.OpenReadStream();

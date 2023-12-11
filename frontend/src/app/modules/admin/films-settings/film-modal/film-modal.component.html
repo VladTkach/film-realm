@@ -1,0 +1,63 @@
+<app-base-modal (close)="closeModal()">
+  <div class="container text-white modal-content p-5">
+    <h2 class="text-3xl mb-3 text-center">{{'New'}} Film</h2>
+    <div class="flex gap-10 mb-6">
+
+      <div class="">
+        <div class="mb-">
+          <label class="block mb-1">Name</label>
+          <app-input class="input"
+                     [formControl]="$any(filmForm.controls['name'])"
+                     [label]="'name'"
+                     placeholder="Enter name">
+          </app-input>
+
+          <label class="block mb-1">Description</label>
+          <app-input class="input"
+                     [formControl]="$any(filmForm.controls['description'])"
+                     [label]="'description'"
+                     placeholder="Enter description">
+          </app-input>
+
+          <label class="block mb-1">Year</label>
+          <app-input class="input"
+                     [formControl]="$any(filmForm.controls['year'])"
+                     [label]="'year'"
+                     placeholder="Enter year">
+          </app-input>
+
+          <label class="block mb-1">Genres</label>
+          <ng-multiselect-dropdown [placeholder]="'Select genres'"
+                                   [data]="genres"
+                                   [settings]="dropdownSettings"
+                                   [formControl]="$any(filmForm.controls['genres'])">
+          </ng-multiselect-dropdown>
+
+          <label class="block mb-1">Actors</label>
+          <ng-multiselect-dropdown [placeholder]="'Select actors'"
+                                   [data]="actors"
+                                   [settings]="dropdownSettings"
+                                   [formControl]="$any(filmForm.controls['actors'])">
+          </ng-multiselect-dropdown>
+        </div>
+
+      </div>
+
+      <div class="">
+        <app-poster [photoUrl]="posterUrl" [width]="240" [height]="360"></app-poster>
+        <div class="mt-4">
+          <label for="userAvatar" class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md">Edit</label>
+          <input type="file" id="userAvatar" accept="image/png, image/jpeg" (change)="onFileChange($event)"
+                 class="hidden"/>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-md w-full"
+            (click)="create()">
+      {{'Create'}}
+    </button>
+  </div>
+</app-base-modal>
+

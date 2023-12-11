@@ -14,6 +14,7 @@ public class FilmRealmContext : DbContext
     public DbSet<Film> Films { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<Actor> Actors { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

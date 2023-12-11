@@ -13,7 +13,7 @@ public class UserController(IUserService userService, IImageService imageService
     [HttpGet("from-token")]
     public async Task<ActionResult<UserDto>> GetUserFromTokenAsync()
     {
-        return Ok(await userService.GetUserById(userIdGetter.GetCurrentUserId()));
+        return Ok(await userService.GetUserByIdAsync(userIdGetter.GetCurrentUserId()));
     }
     
     [HttpPut("update-username")]
@@ -25,7 +25,7 @@ public class UserController(IUserService userService, IImageService imageService
     [HttpPut("update-password")]
     public async Task<ActionResult<UserDto>> UpdateUserPasswordAsync(UpdateUserPassword updateUserPassword)
     {
-        return Ok(await userService.UpdateUserPassword(updateUserPassword));
+        return Ok(await userService.UpdateUserPasswordAsync(updateUserPassword));
     }
     
     [HttpPost("add-avatar")]

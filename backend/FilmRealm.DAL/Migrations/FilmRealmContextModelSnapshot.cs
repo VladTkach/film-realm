@@ -69,6 +69,33 @@ namespace FilmRealm.DAL.Migrations
                     b.ToTable("Actors");
                 });
 
+            modelBuilder.Entity("FilmRealm.DAL.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FilmId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilmId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("FilmRealm.DAL.Entities.Film", b =>
                 {
                     b.Property<int>("Id")
@@ -212,6 +239,25 @@ namespace FilmRealm.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FilmRealm.DAL.Entities.Comment", b =>
+                {
+                    b.HasOne("FilmRealm.DAL.Entities.Film", "Film")
+                        .WithMany("Comments")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FilmRealm.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Film");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FilmRealm.DAL.Entities.User", b =>
                 {
                     b.HasOne("FilmRealm.DAL.Entities.UserRole", "UserRole")
@@ -236,6 +282,11 @@ namespace FilmRealm.DAL.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FilmRealm.DAL.Entities.Film", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

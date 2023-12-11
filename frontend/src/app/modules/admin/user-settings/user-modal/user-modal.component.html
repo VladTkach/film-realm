@@ -1,0 +1,23 @@
+<app-base-modal (close)="closeModal()">
+  <div class="container text-white modal-content p-2">
+    <h2 class="text-3xl mb-3 text-center">Add admin</h2>
+    <div class="mb-2">
+      <app-input [formControl]="$any(userForm.controls['search'])"
+                 [label]="'name'"
+                 placeholder="Search" (input)="onInputChange($event)">
+      </app-input>
+    </div>
+    <div *ngFor="let user of users" class="px-4 py-2 mt-2 bg-gray-700 cursor-pointer rounded flex gap-2 items-center"
+         [class.bg-gray-800]="isSelected(user)"
+         (click)="selectUser(user)">
+      <app-avatar [photoUrl]="user.avatarUrl" [size]="36" [name]="user.userName"></app-avatar>
+      {{user.userName}}
+    </div>
+
+    <button class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-md w-full"
+            (click)="promote()"
+            [disabled]="selectedUser === undefined">Promote
+    </button>
+  </div>
+</app-base-modal>
+

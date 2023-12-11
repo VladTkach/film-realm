@@ -1,0 +1,33 @@
+<div class="p-5" *ngIf="pagedFilms">
+  <div class="filter-section mb-4 flex justify-between">
+    <div class="flex gap-2">
+      <app-input class="input"
+                 [formControl]="$any(filterForm.controls['search'])"
+                 [label]="'search'"
+                 placeholder="Search"
+                 [width]="'200px'">
+      </app-input>
+      <app-custom-select [options]="sorts"
+                         [width]="'200px'"
+                         [formControl]="$any(filterForm.controls['sort'])"
+                         [placeholder]="'Sort By'">
+      </app-custom-select>
+
+      <app-custom-multi-select [formControl]="$any(filterForm.controls['genre'])"
+                               [options]="genres"
+                               labelField="name"
+                               [placeholder]="'Genre'"
+                               [width]="'200px'">
+      </app-custom-multi-select>
+
+    </div>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-md" (click)="filterFilm()">Filter</button>
+  </div>
+  <div class="films-section flex flex-wrap">
+    <app-film-details *ngFor="let film of pagedFilms?.items" [film]="film"></app-film-details>
+  </div>
+  <app-pagination [totalItems]="pagedFilms.totalCount"
+                  [pageSize]="pagination.pageSize"
+                  (pageChanged)="pageChanged($event)">
+  </app-pagination>
+</div>

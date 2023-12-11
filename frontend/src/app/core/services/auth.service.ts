@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpInternalService} from "./http-internal.service";
 import {BehaviorSubject, tap} from "rxjs";
 import {UserDto} from "../../models/user/user-dto";
@@ -11,6 +11,7 @@ import {Token} from "../../models/auth/token";
 })
 export class AuthService {
   private readonly authRoutePrefix = '/api/auth';
+  private readonly roleItem = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
   private currentUserSource = new BehaviorSubject<UserDto | null>(null);
   public currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpInternalService) { }
@@ -29,6 +30,11 @@ export class AuthService {
   }
 
   public setCurrentUser(userDto: UserDto) {
+    const token = this.getAccessToken();
+    if (!token){
+      return;
+    }
+    userDto.role = this.getDecodedToken(token)[this.roleItem];
     this.currentUserSource.next(userDto);
   }
 
@@ -44,5 +50,9 @@ export class AuthService {
 
   private setToken(token: Token) {
     localStorage.setItem('token', JSON.stringify(token));
+  }
+
+  getDecodedToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }

@@ -33,10 +33,11 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         return entity;
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task<TEntity> AddAsync(TEntity entity)
     {
-        await _context.Set<TEntity>().AddAsync(entity);
+        var entityEntry = (await _context.Set<TEntity>().AddAsync(entity)).Entity;
         await _context.SaveChangesAsync();
+        return entityEntry;
     }
 
     public void Delete(TEntity entity)

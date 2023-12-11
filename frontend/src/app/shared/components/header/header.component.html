@@ -6,6 +6,7 @@
       <a routerLink="/films" class="text-white hover:text-gray-300 px-3 py-2">Films</a>
       <a *ngIf="(authService.currentUser$ | async)" routerLink="/list" class="text-white hover:text-gray-300 px-3 py-2">My
         list</a>
+      <a *ngIf="(authService.currentUser$ | async)?.role === 'Admin'" routerLink="/admin" class="text-white hover:text-gray-300 px-3 py-2">Admin</a>
     </nav>
   </div>
   <div class="flex items-center">
